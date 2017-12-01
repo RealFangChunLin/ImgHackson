@@ -1,0 +1,6 @@
+{
+    "name": "hack",
+    "dependencies": {
+        "tesseract.js": "^1.0.10"
+    }
+}
