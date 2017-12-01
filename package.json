@@ -1,7 +1,14 @@
 {
     "name": "hack",
     "dependencies": {
-        "gm": "^1.23.0",
-        "node-tesseract": "^0.2.7"
+        "chokidar": "^1.7.0",
+        "electron": "1.7.9",
+        "gm": "1.23.0",
+        "nedb": "1.8.0",
+        "node-tesseract": "0.2.7"
+    },
+    "main": "main.js",
+    "scripts": {
+      "start": "electron ."
     }
 }
