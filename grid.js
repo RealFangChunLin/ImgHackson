@@ -1,4 +1,5 @@
 // const Vue = require('vue');
+var db = require('../record');
 
 Vue.component('demo-grid', {
     template: '#grid-template',
@@ -39,8 +40,11 @@ Vue.component('demo-grid', {
     },
     methods: {
       getImages: function (content) {
-        return [{content: 'B0001', path: 'C://Users/Administrator/Documents/Tencent Files/282513713/FileRecv/car1.jpg'},
-        {content: 'B777', path: 'C://Users/Administrator/Documents/Tencent Files/282513713/FileRecv/car2.jpg'}];
+        db.datasource.query({content:"/"+content+"/"},function(err,newdoc){
+          return newdoc;
+        });
+        // return [{content: 'B0001', path: 'C://Users/Administrator/Documents/Tencent Files/282513713/FileRecv/car1.jpg'},
+        // {content: 'B777', path: 'C://Users/Administrator/Documents/Tencent Files/282513713/FileRecv/car2.jpg'}];
       }
     }
   })

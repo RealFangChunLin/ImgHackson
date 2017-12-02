@@ -2,10 +2,12 @@ var Datastore = require('nedb');
 
 var DB = {};
 DB.create = function (fileName) { 
-    DB.db = new Datastore({
+    const db = new Datastore({
         filename: fileName,
         autoload: true
     });
+
+    return db;
 };
 
 DB.insert = function (doc,callback ) {

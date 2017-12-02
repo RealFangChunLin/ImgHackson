@@ -1,6 +1,6 @@
-const db  = require('./record/Datasource.js');
+const db  = require('./Datasource.js');
+const path = require('path');
+const datasource = db.create(path.join(__dirname,"../data/data.db"));
+const configsource = db.create(path.join(__dirname,"../data/config.db"));
 
-const datesource = db.create("./data/data.db");
-const configsource = db.create("./data/config.db");
-
-module.exports = {datesource, configsource};
+module.exports = {datasource, configsource};

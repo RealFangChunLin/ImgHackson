@@ -1,11 +1,12 @@
 var fs        = require('fs');
 var tesseract = require('node-tesseract');
 var gm        = require('gm');
-
+var db = require('../record');
 module.exports = function imgProcess(imgPath){
     recognizer(imgPath)
     .then(text => {
         console.log(`识别结果:${text}`);
+        db.datasource.insert({content:text, path:imgPath },()=>{}); 
     })
     .catch((err)=> {
         console.error(`识别失败:${err}`);
@@ -39,8 +40,8 @@ function processImg (imgPath, newPath, thresholdVal) {
  */
 function recognizer (imgPath, options) {
     options = Object.assign({
-        l: 'chi_sim+eng',
-        psm: 9
+        l: 'chi_sim',
+        psm: 3
     }, options);
 
     return new Promise((resolve, reject) => {

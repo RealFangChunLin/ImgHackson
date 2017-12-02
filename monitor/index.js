@@ -2,7 +2,7 @@ var chokidar = require('chokidar');
 const path =require('path');
 const imageProcess = require('../parse-img');
 
-var watcher = chokidar.watch('C://Users/Administrator/Documents/Tencent Files/282513713/FileRecv', {
+var watcher = chokidar.watch('D://workspace/pyForFastCheck/src/traindata/num', {
     ignored: /(^|[\/\\])\../,
     persistent: true,
     ignoreInitial: true
