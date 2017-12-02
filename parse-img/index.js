@@ -3,19 +3,22 @@ var tesseract = require('node-tesseract');
 var gm        = require('gm');
 var db = require('../record');
 var msg = require('../monitor/showMessage');
+const path = require('path');
 
 module.exports = function imgProcess(imgPath){
     recognizer(imgPath)
     .then(text => {
         console.log(`识别结果:${text}`);
+        const jsonStr = fs.readFileSync(path.join(__dirname,'../data/config.db')).toString();
+        const configObj = JSON.parse(jsonStr);
         db.datasource.insert({content:text, path:imgPath },()=>{});
-        if(isContains(text.toLowerCase() ,"error")){
+        if(isContains(text.toLowerCase() ,configObj.keywords)){
             msg.showInfo("find error in "+imgPath);
         }
     })
     .catch((err)=> {
         console.error(`识别失败:${err}`);
-        msg.showError("ERROR:"+err);
+        //msg.showError("ERROR:"+err);
     });
 }
 
@@ -50,7 +53,7 @@ function isContains(str, substr) {
  */
 function recognizer (imgPath, options) {
     options = Object.assign({
-        l: 'chi_sim',
+        l: 'chi_sim+eng',
         psm: 3
     }, options);
 

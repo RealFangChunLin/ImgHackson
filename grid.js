@@ -49,7 +49,7 @@ Vue.component('demo-grid', {
         for(var i = 0; i < strs.length; i++){
           if(strs[i].trim() !== ''){
             const tmp = JSON.parse(strs[i]);
-            if(tmp.content.indexOf(content) > -1){
+            if(tmp.content.toLowerCase().indexOf(content) > -1){
               objs.push(tmp);
             }
           }
