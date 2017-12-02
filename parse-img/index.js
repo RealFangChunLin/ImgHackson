@@ -13,7 +13,7 @@ module.exports = function imgProcess(imgPath){
         const configObj = JSON.parse(jsonStr);
         db.datasource.insert({content:text, path:imgPath },()=>{});
         if(isContains(text.toLowerCase() ,configObj.keywords)){
-            msg.showInfo("find error in "+imgPath);
+            msg.showInfo("find keywords in "+imgPath);
         }
     })
     .catch((err)=> {
