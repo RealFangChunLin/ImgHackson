@@ -1,19 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
 
-    <script>
-      // You can also require other files to run in this process
-      require('./renderer.js')
+<head>
+  <meta charset="UTF-8">
+  <title>image magic</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <script src="./node_modules/vue/dist/vue.min.js"></script>
+  <script>
+    require('./renderer.js')
+  </script>
+  <script type="text/x-template" id="grid-template">
+      <table v-if="filteredData.length">
+        <thead>
+          <tr>
+            <th v-for="key in columns"
+              @click="sortBy(key)"
+              :class="{ active: sortKey == key }">
+              {{ key | capitalize }}
+              <!-- <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+              </span> -->
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="entry in filteredData">
+            <td v-for="key in columns">
+              <img v-if="key==='image'" v-bind:src="entry['path']"/>
+              <div v-else>{{entry[key]}}</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p v-else>No matches found.</p>
     </script>
-  </body>
+
+  <div id="demo">
+    <div class="searchBox">
+      Search
+      <input name="query" v-model="searchQuery">
+    </div>
+    <demo-grid :data="gridData" :columns="gridColumns" :filter-key="searchQuery">
+    </demo-grid>
+  </div>
+
+  <script src="grid.js"></script>
+</body>
+
 </html>
