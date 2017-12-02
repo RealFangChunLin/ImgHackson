@@ -1,5 +1,8 @@
 // const Vue = require('vue');
-var db = require('../record');
+var db = require('./record');
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
 
 Vue.component('demo-grid', {
     template: '#grid-template',
@@ -40,9 +43,22 @@ Vue.component('demo-grid', {
     },
     methods: {
       getImages: function (content) {
-        db.datasource.query({content:"/"+content+"/"},function(err,newdoc){
-          return newdoc;
-        });
+        const jsonStr = fs.readFileSync(path.join(__dirname,'./data/data.db')).toString();
+        const strs = jsonStr.split('\n');
+        const objs = [];
+        for(var i = 0; i < strs.length; i++){
+          if(strs[i].trim() !== ''){
+            const tmp = JSON.parse(strs[i]);
+            if(tmp.content.indexOf(content) > -1){
+              objs.push(tmp);
+            }
+          }
+
+        }
+        return objs;
+        // db.datasource.query({content:"/"+content+"/"},function(err,newdoc){
+        //   return newdoc;
+        // });
         // return [{content: 'B0001', path: 'C://Users/Administrator/Documents/Tencent Files/282513713/FileRecv/car1.jpg'},
         // {content: 'B777', path: 'C://Users/Administrator/Documents/Tencent Files/282513713/FileRecv/car2.jpg'}];
       }
