@@ -16,6 +16,4 @@ const showInfo = function(message) {
         message : message
     });
 };
-
-showInfo("Hello Word!");
 module.exports = {showError, showInfo};

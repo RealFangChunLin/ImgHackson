@@ -2,14 +2,20 @@ var fs        = require('fs');
 var tesseract = require('node-tesseract');
 var gm        = require('gm');
 var db = require('../record');
+var msg = require('../monitor/showMessage');
+
 module.exports = function imgProcess(imgPath){
     recognizer(imgPath)
     .then(text => {
         console.log(`识别结果:${text}`);
-        db.datasource.insert({content:text, path:imgPath },()=>{}); 
+        db.datasource.insert({content:text, path:imgPath },()=>{});
+        if(isContains(text.toLowerCase() ,"error")){
+            msg.showInfo("find error in "+imgPath);
+        }
     })
     .catch((err)=> {
         console.error(`识别失败:${err}`);
+        msg.showError("ERROR:"+err);
     });
 }
 
@@ -30,6 +36,10 @@ function processImg (imgPath, newPath, thresholdVal) {
                 resolve(newPath);
             });
     });
+}
+
+function isContains(str, substr) {
+    return str.indexOf(substr) >= 0;
 }
 
 /**
